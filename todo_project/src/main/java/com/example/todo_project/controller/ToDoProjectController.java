@@ -1,6 +1,7 @@
 package com.example.todo_project.controller;
 
 import java.util.List;
+import java.util.Map;
 
 //ログ出力用
 import org.slf4j.Logger;
@@ -113,6 +114,17 @@ public class ToDoProjectController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}/completion")
+    public ResponseEntity<ToDoProject> updateCompletionStatus(@PathVariable Integer id, @RequestBody Map<String, Boolean> completedStatus) {
+        return todoRepository.findById(id)
+            .map(todo -> {
+                todo.setCompleted(completedStatus.get("completed"));  // completedの値を取得
+                ToDoProject updatedTodo = todoRepository.save(todo);
+                return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
+            })
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
 

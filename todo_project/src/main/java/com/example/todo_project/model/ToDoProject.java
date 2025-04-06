@@ -29,6 +29,9 @@ public class ToDoProject {
     @JoinColumn(name = "category_id",nullable = false)
     private ToDoCategory category_id;
 
+    @Column(name = "completed", nullable = false)
+    private boolean completed;
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -60,6 +63,14 @@ public class ToDoProject {
 
     public void setCategory(ToDoCategory category){
         this.category_id = category;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     // toStringメソッド
